@@ -8,3 +8,4 @@ set(CMAKE_C_STANDARD 11)
 add_compile_options(-Wall -Wextra -Wpedantic)
 
 add_subdirectory(source)
+add_subdirectory(test)

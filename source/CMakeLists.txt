@@ -1,2 +1,5 @@
-add_executable(dbtest sqlite_test.c)
-target_link_libraries(dbtest PRIVATE sqlite3)
+add_library(parse_command parse_command.c)
+
+add_executable(anubday main.c)
+target_link_libraries(anubday PRIVATE parse_command)
+
