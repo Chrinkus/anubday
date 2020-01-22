@@ -2,9 +2,10 @@
 
 enum Cmds { add, rm, edit, show, help, num_cmds };
 
-extern const char* commands[num_cmds];
+extern const char* commands[num_cmds];		// external access needed?
 
 int read_command(const char s[static 1]);
+void read_show_opts(int argc, char* argv[argc+1]);
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 

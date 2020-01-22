@@ -8,8 +8,6 @@
 
 #include "parse_command.h"
 
-//extern const char* commands[num_cmds];
-
 int main(int argc, char* argv[argc+1])
 {
 	// no args, just print today's birthdays
@@ -23,8 +21,15 @@ int main(int argc, char* argv[argc+1])
 	if (res < 0) {
 		fprintf(stderr, "Unknown command: %s\n", argv[1]);
 		return EXIT_FAILURE;
-	} else {
-		printf("You want to '%s' some data\n", commands[res]);
+	}
+
+	switch (res) {
+	case show:
+		read_show_opts(--argc, ++argv);
+		break;
+	default:
+		printf("You selected '%s'\n", commands[res]);
+		break;
 	}
 
 	return EXIT_SUCCESS;

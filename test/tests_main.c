@@ -5,6 +5,8 @@
 #include <cmocka.h>
 #include <string.h>
 
+#include <stdio.h>
+
 #include "parse_command.h"
 
 static void read_command_success(void** state)
@@ -33,14 +35,33 @@ static void read_user_input_success(void** state)
 		"Don",
 		"-b",
 		"1936-02-12",
-		NULL,
+		NULL,		// real argv is NULL terminated(?)
 	};
 	user_input* pu = read_user_input(n, args);
 	assert_non_null(pu);
-	assert_string_equal(pu->first, args[2]);
-	assert_string_equal(pu->last, args[4]);
-	assert_string_equal(pu->bday, args[6]);
+	assert_string_equal(pu->first, "Joe");
+	assert_string_equal(pu->last, "Don");
+	assert_string_equal(pu->bday, "1936-02-12");
 
+	free(pu);
+}
+
+static void read_user_input_partial(void** state)
+{
+	(void) state; /* unused */
+	int n = 7;
+	char* args[] = {
+		"prog",
+		"-f",
+		"Richard",
+		"-k",		// unregistered flag, should read as '?'
+		"Whitman"
+		"-b",
+		"1926-06-01",
+		NULL,
+	};
+	user_input* pu = read_user_input(n, args);
+	assert_null(pu);
 	free(pu);
 }
 
@@ -50,6 +71,7 @@ int main(void)
 		cmocka_unit_test(read_command_success),
 		cmocka_unit_test(read_command_fail),
 		cmocka_unit_test(read_user_input_success),
+		cmocka_unit_test(read_user_input_partial),
 	};
 
 	return cmocka_run_group_tests(tests, NULL, NULL);
