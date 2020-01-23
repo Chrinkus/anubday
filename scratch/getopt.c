@@ -24,13 +24,13 @@ bool read_opts(int argc, char* argv[argc+1])
 	while ((opt = getopt(argc, argv, "l:a:d:")) != -1) {
 		switch (opt) {
 		case 'l':
-			puts("long");
+			puts(optarg);
 			break;
 		case 'a':
-			puts("all");
+			puts(optarg);
 			break;
 		case 'd':
-			puts("directory");
+			puts(optarg);
 			break;
 		case '?':
 			fprintf(stderr, "Error: Unknown flag\n", opt);

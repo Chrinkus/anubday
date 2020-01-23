@@ -57,6 +57,7 @@ user_input* read_user_input(int argc, char* argv[argc+1])
 	memset(pu->last, '\0', buf_last);
 	memset(pu->bday, '\0', buf_bday);
 
+	optind = 1;		// reset to first argument
 	int opt;
 	while ((opt = getopt(argc, argv, "f:l:b:")) != -1) {
 		switch (opt) {
