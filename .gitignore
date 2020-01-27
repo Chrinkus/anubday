@@ -1,6 +1,7 @@
 # Project
 build
-a.out
+*.out
+*.db
 
 # Vim
 *.swo

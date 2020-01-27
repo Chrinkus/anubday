@@ -18,4 +18,5 @@ struct User_input {
 	char bday[buf_bday];
 };
 
+user_input* create_user_input(void);
 user_input* read_user_input(int argc, char* argv[argc+1]);

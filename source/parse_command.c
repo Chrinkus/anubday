@@ -45,17 +45,22 @@ void read_show_opts(int argc, char* argv[argc+1])
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 
-user_input* read_user_input(int argc, char* argv[argc+1])
+user_input* create_user_input(void)
 {
-	// Consider moving malloc and memset to separate 'create' function
 	user_input* pu = (user_input*) malloc(sizeof(user_input));
-	if (!pu) {
-		fprintf(stderr, "read_user_input(): NULL malloc\n");
+	if (!pu)
 		return NULL;
-	}
-	memset(pu->first, '\0', buf_first);	// memset vs pu->first[0] = '\0'
+
+	memset(pu->first, '\0', buf_first);
 	memset(pu->last, '\0', buf_last);
 	memset(pu->bday, '\0', buf_bday);
+
+	return pu;
+}
+
+user_input* read_user_input(int argc, char* argv[argc+1])
+{
+	user_input* pu = create_user_input();
 
 	optind = 1;		// reset to first argument
 	int opt;
@@ -72,9 +77,11 @@ user_input* read_user_input(int argc, char* argv[argc+1])
 			break;
 		case '?':
 			fprintf(stderr, "Unexpected argument: %c\n", opt);
+			free(pu);
 			return NULL;
 		default:
 			fprintf(stderr, "Should never get here: %c\n", opt);
+			free(pu);
 			return NULL;
 		}
 	}
